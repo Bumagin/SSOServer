@@ -1,0 +1,60 @@
+﻿@using IdentityServer.Domain.Users
+@using Microsoft.AspNetCore.Identity
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item">
+        <NavLink class="nav-link" href="Account/Manage" Match="NavLinkMatch.All">Profile</NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="Account/Manage/Email">Email</NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="Account/Manage/ChangePassword">Password</NavLink>
+    </li>
+    @if (hasExternalLogins)
+    {
+        <li class="nav-item">
+            <NavLink class="nav-link" href="Account/Manage/ExternalLogins">External logins</NavLink>
+        </li>
+    }
+    <li class="nav-item">
+        <NavLink class="nav-link" href="Account/Manage/TwoFactorAuthentication">Two-factor authentication</NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="Account/Manage/PersonalData">Personal data</NavLink>
+    </li>
+</ul>
+
+<style>
+    .nav-link {
+        background-color: #2a2a2a; /* Темный фон для пунктов меню */
+        color: #ffffff; /* Белый цвет текста */
+        border-radius: 0.25rem; /* Закругленные углы */
+        margin: 0.25rem 0; /* Отступы между пунктами меню */
+        transition: background-color 0.3s; /* Плавный переход фона */
+    }
+
+    .nav-link:hover {
+        background-color: #4a4a4a; /* Более светлый фон при наведении */
+        color: #ffffff; /* Белый цвет текста при наведении */
+    }
+
+    .nav-link.active {
+        background-color: #2a2a2a; /* Темный фон для активного пункта */
+        color: #ffffff; /* Белый цвет текста для активного пункта */
+        font-weight: bold; /* Жирный текст для выделения */
+    }
+</style>
+
+@code {
+    private bool hasExternalLogins;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    }
+
+}

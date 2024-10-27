@@ -1,0 +1,122 @@
+body {
+    background-color: #121212; /* Темный фон для всего документа */
+    color: #e0e0e0; /* Цвет текста */
+}
+
+.navbar-toggler {
+    appearance: none;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 2.5rem;
+    color: white;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+    border-radius: 5px; /* Закругленные углы для кнопки */
+}
+
+.navbar-toggler:checked {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.top-row {
+    background-color: #292929; /* Темный фон для верхней строки */
+    border-bottom: 1px solid #444; /* Цвет границы */
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.top-row ::deep a,
+.top-row ::deep .btn-link {
+    color: #e0e0e0; /* Цвет текста для ссылок */
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
+}
+
+.top-row ::deep a:hover,
+.top-row ::deep .btn-link:hover {
+    text-decoration: underline;
+}
+
+.top-row ::deep a:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.navbar-brand {
+    font-size: 1.1rem;
+    color: #e0e0e0; /* Светлый цвет для названия бренда */
+}
+
+.bi {
+    display: inline-block;
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    top: -1px;
+    background-size: cover;
+}
+
+.nav-item {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+.nav-item:first-of-type {
+    padding-top: 1rem;
+}
+
+.nav-item:last-of-type {
+    padding-bottom: 1rem;
+}
+
+.nav-item ::deep .nav-link {
+    color: #d7d7d7; /* Цвет ссылок */
+    background: none;
+    border: none;
+    border-radius: 4px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+    width: 100%;
+}
+
+.nav-item ::deep a.active {
+    background-color: rgba(255, 255, 255, 0.37); /* Цвет активного элемента */
+    color: white;
+}
+
+.nav-item ::deep .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.nav-scrollable {
+    display: none;
+    background-color: #1e1e1e; /* Темный фон для прокручиваемого меню */
+}
+
+.navbar-toggler:checked ~ .nav-scrollable {
+    display: block;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler {
+        display: none;
+    }
+
+    .nav-scrollable {
+        /* Никогда не сворачивать боковую панель для широких экранов */
+        display: block;
+
+        /* Разрешить прокрутку боковой панели для длинных меню */
+        height: calc(100vh - 3.5rem);
+        overflow-y: auto;
+    }
+}
