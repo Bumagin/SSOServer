@@ -1,5 +1,6 @@
 using System.Text;
 using AuthorizationServer;
+using Carter;
 using IdentityServer.Domain.Users;
 using IdentityServer.Persistence.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,6 +21,8 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+builder.Services.AddCarter();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
@@ -121,9 +124,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    /*
-    app.UseMigrationsEndPoint();
-*/
+    
+    var scope1= app.Services.CreateScope();
+    scope1.ServiceProvider.GetRequiredService<SSOServerDbContext>().Database.Migrate();
+
 }
 else
 {
@@ -139,6 +143,8 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.MapCarter();
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
