@@ -1,9 +1,9 @@
 ﻿services:
-#  ssoserver.ui:
-#    image: ssoserver.ui
-#    build:
-#      context: .
-#      dockerfile: src/SSOServer.UI/Dockerfile
+  ssoserver.ui:
+    image: ssoserver.ui
+    build:
+      context: .
+      dockerfile: src/SSOServer.UI/Dockerfile
   
   minio:
     image: minio/minio:latest
