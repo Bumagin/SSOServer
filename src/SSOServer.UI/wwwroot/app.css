@@ -54,18 +54,24 @@ h1:focus {
 
 .form-control {
     background-color: #2a2a2a; /* Темный фон для инпутов */
-    color: #2a2a2a; /* Белый цвет текста в инпутах */
+    color: white; /* Белый цвет текста в инпутах */
     border-color: #4a4a4a; /* Темный цвет рамки для инпутов */
 }
 
 .form-control::placeholder {
-    color: #2a2a2a; /* Цвет плейсхолдера (текст подсказки) */
+    color: white; /* Цвет плейсхолдера (текст подсказки) */
+}
+
+.form-control:disabled {
+    background-color: #5a5959; /* Темный фон для инпутов */
+    color: white; /* Цвет плейсхолдера (текст подсказки) */
 }
 
 .form-control:focus {
     background-color: #2a2a2a; /* Темный фон при фокусе */
     border-color: #0056b3; /* Темный синий цвет рамки при фокусе */
     box-shadow: 0 0 0 0.1rem #0056b3, 0 0 0 0.25rem #0056b3; /* Эффект при фокусе */
+    color: white;
 }
 
 .nav-link.active {

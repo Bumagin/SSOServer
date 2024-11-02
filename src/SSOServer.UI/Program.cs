@@ -147,6 +147,5 @@ app.MapRazorComponents<App>()
 app.MapCarter();
 
 // Add additional endpoints required by the Identity /Account Razor components.
-app.MapAdditionalIdentityEndpoints();
 
 app.Run();

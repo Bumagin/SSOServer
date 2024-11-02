@@ -12,29 +12,44 @@
 
 <PageTitle>Profile</PageTitle>
 
-<h3>Profile</h3>
+<h3>Профиль</h3>
 <StatusMessage/>
 
 <div class="row">
     <div class="col-md-6">
+        <div>
+            <img src="@AvatarUrl" alt="Current Avatar" class="img-thumbnail" style="width: 150px; height: 150px;" />
+            <button class="btn btn-primary mt-2" @onclick="ShowAvatarModal">Change Avatar</button>
+        </div>
+
+        <AvatarModal @ref="avatarModal" />
+
         <EditForm Model="Input" FormName="profile" OnValidSubmit="OnValidSubmitAsync" method="post">
             <DataAnnotationsValidator/>
             <ValidationSummary class="text-danger" role="alert"/>
             <div class="form-floating mb-3">
                 <input type="text" value="@username" class="form-control" placeholder="Please choose your username." disabled/>
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">Никнейм</label>
             </div>
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label for="phone-number" class="form-label">Phone number</label>
+                <label for="phone-number" class="form-label">Номер телефона</label>
                 <ValidationMessage For="() => Input.PhoneNumber" class="text-danger"/>
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-dark">Save</button>
+            <button type="submit" class="w-100 btn btn-lg btn-dark">Сохранить</button>
         </EditForm>
     </div>
 </div>
 
 @code {
+    private AvatarModal? avatarModal;
+
+    private string AvatarUrl => avatarModal?.AvatarImageUrl ?? "default-avatar.png";
+
+    private void ShowAvatarModal()
+    {
+        avatarModal?.OpenModal();
+    }
     private ApplicationUser user = default!;
     private string? username;
     private string? phoneNumber;
@@ -73,5 +88,4 @@
         [Display(Name = "Phone number")]
         public string? PhoneNumber { get; set; }
     }
-
 }

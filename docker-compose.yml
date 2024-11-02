@@ -1,0 +1,16 @@
+﻿services:
+#  ssoserver.ui:
+#    image: ssoserver.ui
+#    build:
+#      context: .
+#      dockerfile: src/SSOServer.UI/Dockerfile
+  
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin123
+    ports:
+      - "9000:9000"   # Port for S3-compatible API
+      - "9001:9001"   # Port for MinIO console UI
