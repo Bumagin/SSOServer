@@ -17,12 +17,6 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div>
-            <img src="@AvatarUrl" alt="Current Avatar" class="img-thumbnail" style="width: 150px; height: 150px;" />
-            <button class="btn btn-primary mt-2" @onclick="ShowAvatarModal">Change Avatar</button>
-        </div>
-
-        <AvatarModal @ref="avatarModal" />
 
         <EditForm Model="Input" FormName="profile" OnValidSubmit="OnValidSubmitAsync" method="post">
             <DataAnnotationsValidator/>
@@ -42,14 +36,6 @@
 </div>
 
 @code {
-    private AvatarModal? avatarModal;
-
-    private string AvatarUrl => avatarModal?.AvatarImageUrl ?? "default-avatar.png";
-
-    private void ShowAvatarModal()
-    {
-        avatarModal?.OpenModal();
-    }
     private ApplicationUser user = default!;
     private string? username;
     private string? phoneNumber;
