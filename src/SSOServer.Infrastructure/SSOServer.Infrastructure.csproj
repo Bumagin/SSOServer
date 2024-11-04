@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
         <PrivateAssets>all</PrivateAssets>
@@ -23,6 +24,10 @@
     <ItemGroup>
       <ProjectReference Include="..\SSOServer.Application\SSOServer.Application.csproj" />
       <ProjectReference Include="..\SSOServer.Domain\SSOServer.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Identity\" />
     </ItemGroup>
 
 </Project>

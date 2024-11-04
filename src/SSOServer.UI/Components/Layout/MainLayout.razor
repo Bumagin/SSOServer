@@ -1,23 +1,49 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
+@inject NavigationManager NavigationManager
+@implements IDisposable
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+<div class="top-row px-4">
+    <AuthorizeView>
+        <div class="nav-item px-3">
+            <form action="Account/Logout" method="post" style="display: inline;">
+                <AntiforgeryToken/>
+                <input type="hidden" name="ReturnUrl" value="@currentUrl"/>
+                <button type="submit" class="nav-link" style="border: none; background: none; padding: 0; color: inherit; cursor: pointer;">
+                    <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Выйти
+                </button>
+            </form>
         </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    </AuthorizeView>
 </div>
+
+<article class="content px-4">
+    @Body
+</article>
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}

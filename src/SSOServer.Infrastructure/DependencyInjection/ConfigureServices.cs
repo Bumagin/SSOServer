@@ -1,8 +1,6 @@
 ﻿using System.Text;
-using AuthorizationServer;
 using IdentityServer.Domain.Users;
 using IdentityServer.Persistence.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,64 +13,89 @@ public static class ConfigureServices
 {
     public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-    }
-
-    public static void AddIdentityLayer(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<SSOServerDbContext>()
-            .AddDefaultTokenProviders();
-
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                options => { options.LoginPath = "/account/login"; });
+        var connectionString = configuration.GetConnectionString("DefaultConnection") ??
+                               throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
         services.AddDbContext<SSOServerDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("PostgreSql"));
-
+            options.UseNpgsql(connectionString);
             options.UseOpenIddict();
         });
+    }
 
+    public static void AddIdentity(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddCascadingAuthenticationState();
+        services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+            })
+            .AddJwtBearer(IdentityConstants.BearerScheme, options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["Jwt:Issuer"],
+                    ValidAudience = configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                };
+            })
+            .AddIdentityCookies(options =>
+            {
+                options.ApplicationCookie.Configure(x =>
+                {
+                    x.LoginPath = "/account/login";
+                    x.AccessDeniedPath = "/account/accessdenied";
+                });
+            });
+        
+        services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddEntityFrameworkStores<SSOServerDbContext>()
+            .AddSignInManager()
+            .AddDefaultTokenProviders();
+    }
+
+    public static void AddOpenidConfiguration(this IServiceCollection services)
+    {
         services.AddOpenIddict()
-            // Register the OpenIddict core components.
             .AddCore(options =>
             {
-                // Configure OpenIddict to use the EF Core stores/models.
                 options.UseEntityFrameworkCore()
                     .UseDbContext<SSOServerDbContext>();
             })
 
-            // Register the OpenIddict server components.
             .AddServer(options =>
             {
+        
                 options
                     .AllowClientCredentialsFlow()
                     .AllowAuthorizationCodeFlow()
                     .RequireProofKeyForCodeExchange()
                     .AllowRefreshTokenFlow();
-                options.AllowPasswordFlow();
+        
+
                 options
                     .SetTokenEndpointUris("/connect/token")
                     .SetAuthorizationEndpointUris("/connect/authorize")
                     .SetUserinfoEndpointUris("/connect/userinfo");
 
-                // Encryption and signing of tokens
                 options
                     .AddEphemeralEncryptionKey()
                     .AddEphemeralSigningKey()
                     .DisableAccessTokenEncryption();
 
-                // Register scopes (permissions)
-                options.RegisterScopes("api", "openid"); // Не забудьте добавить "openid"
+                options.RegisterScopes("api", "openid");
 
-                // Register the ASP.NET Core host and configure the ASP.NET Core-specific options.
                 options
                     .UseAspNetCore()
                     .EnableTokenEndpointPassthrough()
                     .EnableAuthorizationEndpointPassthrough()
-                    .EnableUserinfoEndpointPassthrough();
+                    .EnableUserinfoEndpointPassthrough();            
+        
             });
-        services.AddHostedService<TestData>();
     }
 }

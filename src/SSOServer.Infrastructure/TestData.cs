@@ -52,7 +52,8 @@ namespace AuthorizationServer
                         OpenIddictConstants.Permissions.Prefixes.Scope + "api",
                         OpenIddictConstants.Permissions.Prefixes.Scope + "openid",
                         OpenIddictConstants.Permissions.ResponseTypes.Code,
-                        OpenIddictConstants.Permissions.ResponseTypes.CodeIdToken
+                        OpenIddictConstants.Permissions.ResponseTypes.CodeIdToken,
+                        
                     },
                     RedirectUris =
                     {
