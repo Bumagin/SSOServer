@@ -1,7 +1,24 @@
 ﻿@inherits LayoutComponentBase
 @layout AccountLayout
 
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
 <h1 class="text-center">Редактирование аккаунта</h1>
+
+@* <div class="top-row px-4"> *@
+@*     <AuthorizeView> *@
+@*         <div class="nav-item px-3"> *@
+@*             <form action="Account/Logout" method="post" style="display: inline;"> *@
+@*                 <AntiforgeryToken/> *@
+@*                 <input type="hidden" name="ReturnUrl" value="@currentUrl"/> *@
+@*                 <button type="submit" class="nav-link" style="border: none; background: none; padding: 0; color: inherit; cursor: pointer;"> *@
+@*                     <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Выйти *@
+@*                 </button> *@
+@*             </form> *@
+@*         </div> *@
+@*     </AuthorizeView> *@
+@* </div> *@
 
 <div class="container justify-content-center shadow-box">
     <hr />
@@ -14,3 +31,24 @@
         </div>
     </div>
 </div>
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
