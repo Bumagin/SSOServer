@@ -15,11 +15,3 @@ The SSO Server is a Single Sign-On server built on .NET 8 using ASP.NET Authenti
 * PostgreSql
 * OpenIddict
 * AspNetCore Authentication
-
-## Screenshots
-
-<p>
-    <img src="https://i.ibb.co/rvr8wZX/2024-11-17-20-45-45.png" alt="Фотография 1">
-    <img src="https://i.ibb.co/zGMPyXj/2024-11-17-20-48-06.png" alt="Фотографя 2">
-    <img src="https://i.ibb.co/MfFMz3h/2024-11-17-20-49-19.png" alt="Фотография 3" height="180" wi>
-</p>
