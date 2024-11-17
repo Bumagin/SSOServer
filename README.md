@@ -10,8 +10,9 @@ The SSO Server is a Single Sign-On server built on .NET 8 using ASP.NET Authenti
 
 ## Tech Stack
 
+* Asp Net 8
 * Blazor Server
 * Entity Framework Core
-* PostgreSql
+* PostgreSQL
 * OpenIddict
 * AspNetCore Authentication
