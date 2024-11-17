@@ -16,3 +16,11 @@ The SSO Server is a Single Sign-On server built on .NET 8 using ASP.NET Authenti
 * PostgreSQL
 * OpenIddict
 * AspNetCore Authentication
+
+## Installing
+Follow these steps to get your development environment set up: (Before Run Start the Docker Desktop)
+1. Clone the repository
+3. You can go to root directory which include **docker-compose.yml** files, run below command:
+```csharp
+docker-compose up -d
+```
