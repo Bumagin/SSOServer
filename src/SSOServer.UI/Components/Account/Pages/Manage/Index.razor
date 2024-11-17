@@ -12,7 +12,7 @@
 
 <PageTitle>Profile</PageTitle>
 
-<h3>Профиль</h3>
+<h3>Profile</h3>
 <StatusMessage/>
 
 <div class="row">
@@ -23,14 +23,14 @@
             <ValidationSummary class="text-danger" role="alert"/>
             <div class="form-floating mb-3">
                 <input type="text" value="@username" class="form-control" placeholder="Please choose your username." disabled/>
-                <label for="username" class="form-label">Никнейм</label>
+                <label for="username" class="form-label">Username</label>
             </div>
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label for="phone-number" class="form-label">Номер телефона</label>
+                <label for="phone-number" class="form-label">Phone Number</label>
                 <ValidationMessage For="() => Input.PhoneNumber" class="text-danger"/>
             </div>
-            <button type="submit" class="w-100 btn btn-lg sso-button">Сохранить</button>
+            <button type="submit" class="w-100 btn btn-lg sso-button">Save</button>
         </EditForm>
     </div>
 </div>

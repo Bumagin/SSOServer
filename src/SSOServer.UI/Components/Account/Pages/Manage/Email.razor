@@ -15,7 +15,7 @@
 
 <PageTitle>Manage email</PageTitle>
 
-<h3>Изменить почту</h3>
+<h3>Email</h3>
 
 <StatusMessage Message="@message"/>
 <div class="row">
@@ -31,23 +31,23 @@
                 <div class="form-floating mb-3 input-group">
                     <input type="text" value="@email" class="form-control" placeholder="Please enter your email." disabled/>
                     
-                    <label for="email" class="form-label">Текущая почта</label>
+                    <label for="email" class="form-label">Current Email</label>
                 </div>
             }
             else
             {
                 <div class="form-floating mb-3">
                     <input type="text" value="@email" class="form-control" placeholder="Please enter your email." disabled/>
-                    <label for="email" class="form-label">Текущая почта</label>
+                    <label for="email" class="form-label">Current Email</label>
                     <button type="submit" class="btn btn-link" form="send-verification-form">Отправить код потверждения почты</button>
                 </div>
             }
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email."/>
-                <label for="new-email" class="form-label">Новая почта</label>
+                <label for="new-email" class="form-label">New Email</label>
                 <ValidationMessage For="() => Input.NewEmail" class="text-danger"/>
             </div>
-            <button type="submit" class="w-100 btn btn-lg sso-button">Сохранить</button>
+            <button type="submit" class="w-100 btn btn-lg sso-button">Save</button>
         </EditForm>
     </div>
 </div>

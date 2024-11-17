@@ -53,7 +53,6 @@ public class OpenIdConnectEndpoints : ICarterModule
                     });
             }
 
-            // Создаем нового пользователя с заявками
             var claims = new List<Claim>
             {
                 new Claim(OpenIddictConstants.Claims.Subject, result.Principal.Identity.Name),
@@ -66,10 +65,8 @@ public class OpenIdConnectEndpoints : ICarterModule
             var claimsIdentity = new ClaimsIdentity(claims, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            // Устанавливаем запрашиваемые области
             claimsPrincipal.SetScopes(request.GetScopes());
 
-            // Используем Results.SignIn для возвращения результата
             return Results.SignIn(claimsPrincipal,
                 authenticationScheme: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         });
@@ -83,16 +80,11 @@ public class OpenIdConnectEndpoints : ICarterModule
 
             if (request.IsClientCredentialsGrantType())
             {
-                // Note: the client credentials are automatically validated by OpenIddict:
-                // if client_id or client_secret are invalid, this action won't be invoked.
-
                 var identity = new ClaimsIdentity(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
 
-                // Subject (sub) is a required field, we use the client id as the subject identifier here.
                 identity.AddClaim(OpenIddictConstants.Claims.Subject,
                     request.ClientId ?? throw new InvalidOperationException());
 
-                // Add some claim, don't forget to add destination otherwise it won't be added to the access token.
                 identity.AddClaim("some-claim", "some-value", OpenIddictConstants.Destinations.AccessToken);
 
                 claimsPrincipal = new ClaimsPrincipal(identity);
@@ -102,7 +94,6 @@ public class OpenIdConnectEndpoints : ICarterModule
 
             else if (request.IsAuthorizationCodeGrantType())
             {
-                // Retrieve the claims principal stored in the authorization code
                 claimsPrincipal =
                     (await context.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme))
                     .Principal;
@@ -110,7 +101,6 @@ public class OpenIdConnectEndpoints : ICarterModule
 
             else if (request.IsRefreshTokenGrantType())
             {
-                // Retrieve the claims principal stored in the refresh token.
                 claimsPrincipal =
                     (await context.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme))
                     .Principal;
