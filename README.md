@@ -1,9 +1,25 @@
 # SSO Server
 
-SSO Server — это сервер единого входа, построенный на .NET 8 с использованием ASP.NET Authentication. Он предоставляет простой и безопасный способ аутентификации пользователей через разные приложения и сервисы.
+The SSO Server is a Single Sign-On server built on .NET 8 using ASP.NET Authentication. It provides a simple and secure way to authenticate users across different applications and services.
 
-## Функции
+## Features
 
-- **Единый вход:** Позволяет пользователям аутентифицироваться один раз и получать доступ к нескольким приложениям без повторного ввода учетных данных.
-- **Безопасность:** Поддерживает современные протоколы аутентификации и шифрования.
-- **Интуитивно понятный интерфейс:** Разработан с использованием Blazor Server.
+- **Single Sign-On:** Allows users to authenticate once and gain access to multiple applications without re-entering credentials.
+- **Security:** Supports modern authentication protocols and encryption standards.
+- **Intuitive Interface:** Developed with Blazor Server for a seamless user experience.
+
+## Tech Stack
+
+* Blazor Server
+* Entity Framework Core
+* PostgreSql
+* OpenIddict
+* AspNetCore Authentication
+
+## Screenshots
+
+<p>
+    <img src="https://i.ibb.co/rvr8wZX/2024-11-17-20-45-45.png" alt="Фотография 1">
+    <img src="https://i.ibb.co/zGMPyXj/2024-11-17-20-48-06.png" alt="Фотографя 2">
+    <img src="https://i.ibb.co/MfFMz3h/2024-11-17-20-49-19.png" alt="Фотография 3" height="180" wi>
+</p>
